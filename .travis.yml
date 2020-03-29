@@ -25,6 +25,17 @@ deploy:
 notifications:
   email:
     recipients:
-    - myemail@address.com
+    - kiskvoi97@gmail.com
     on_success: always
     on_failure: always
+script: ./gradlew :app:build
+
+env:
+  global:
+    - MALLOC_ARENA_MAX=2
+sudo: required
+before_script:
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a -s "768x1280"
+  - emulator -avd test -no-audio -no-window &
+  - adb wait-for-device
+  - adb shell input keyevent 82 &

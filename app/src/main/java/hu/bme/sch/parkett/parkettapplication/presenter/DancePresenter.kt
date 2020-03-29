@@ -1,7 +1,7 @@
-package parkett.sch.bme.hu.parkettapplication.presenter
+package hu.bme.sch.parkett.parkettapplication.presenter
 
-import parkett.sch.bme.hu.parkettapplication.framework.scenes.DanceScreen
-import parkett.sch.bme.hu.parkettapplication.model.Dance
+import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceScreen
+import hu.bme.sch.parkett.parkettapplication.model.Dance
 
 class DancePresenter: Presenter<DanceScreen>() {
     override fun attachScreen(screen: DanceScreen) {

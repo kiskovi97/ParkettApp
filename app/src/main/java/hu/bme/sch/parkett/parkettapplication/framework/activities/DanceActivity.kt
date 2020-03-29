@@ -1,4 +1,4 @@
-package parkett.sch.bme.hu.parkettapplication.framework.activities
+package hu.bme.sch.parkett.parkettapplication.framework.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

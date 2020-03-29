@@ -1,3 +1,3 @@
-package parkett.sch.bme.hu.parkettapplication.model
+package hu.bme.sch.parkett.parkettapplication.model
 
 data class DanceType(val name: String?, val color: String?, val image: String?)

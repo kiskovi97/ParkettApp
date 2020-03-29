@@ -1,4 +1,4 @@
-package parkett.sch.bme.hu.parkettapplication.framework.fragments
+package hu.bme.sch.parkett.parkettapplication.framework.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

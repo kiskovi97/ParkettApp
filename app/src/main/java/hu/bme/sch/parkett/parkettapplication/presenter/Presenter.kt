@@ -1,4 +1,4 @@
-package parkett.sch.bme.hu.parkettapplication.presenter
+package hu.bme.sch.parkett.parkettapplication.presenter
 
 abstract class Presenter<S> {
     protected var screen: S? = null

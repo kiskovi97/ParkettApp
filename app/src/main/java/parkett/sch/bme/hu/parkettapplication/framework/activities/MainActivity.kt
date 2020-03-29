@@ -1,7 +1,8 @@
-package parkett.sch.bme.hu.parkettapplication
+package parkett.sch.bme.hu.parkettapplication.framework.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import parkett.sch.bme.hu.parkettapplication.R
 
 class MainActivity : AppCompatActivity() {
 

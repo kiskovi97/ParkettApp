@@ -1,9 +1,12 @@
 package hu.bme.sch.parkett.parkettapplication.presenter
 
 import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceListScreen
-import hu.bme.sch.parkett.parkettapplication.model.Dance
+import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractor
+import javax.inject.Inject
 
-class DanceListPresenter: Presenter<DanceListScreen>() {
+class DanceListPresenter @Inject constructor(
+        private val danceInteractor: DanceInteractor
+) : Presenter<DanceListScreen>() {
 
     override fun attachScreen(screen: DanceListScreen) {
         super.attachScreen(screen)
@@ -13,7 +16,8 @@ class DanceListPresenter: Presenter<DanceListScreen>() {
         super.detachScreen()
     }
 
-    fun showDanceList(danceList: List<Dance>) {
+    fun refreshDanceList() {
+        val danceList = danceInteractor.getDanceList()
         screen?.showDanceList(danceList)
     }
 }

@@ -46,7 +46,12 @@ class DanceListFragment : Fragment(), DanceListScreen {
     }
 
     override fun showDanceList(result: List<Dance>) {
-        dance_list_textView.text = "DanceList: "+result[0].name
+        var text = "{"
+        for (dance in result) {
+            text += dance.name + ", "
+        }
+        text += "}"
+        dance_list_textView.text = "DanceList: " + text
     }
 
     companion object {

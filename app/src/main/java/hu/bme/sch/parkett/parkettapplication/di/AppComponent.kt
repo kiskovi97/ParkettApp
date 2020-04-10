@@ -5,11 +5,13 @@ import hu.bme.sch.parkett.parkettapplication.ParkettApplication
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceEditFragment
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceListFragment
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceReadFragment
+import hu.bme.sch.parkett.parkettapplication.network.NetworkModule
 import javax.inject.Singleton
 
 @Singleton
 @Component( modules = [
-    ApplicationModule::class
+    ApplicationModule::class,
+    NetworkModule::class
 ])
 public interface AppComponent {
     fun inject(parkettApplication: ParkettApplication)

@@ -52,7 +52,7 @@ class DanceReadFragment : Fragment(), DanceReadScreen {
         if (dance == null) {
             dance_textView.text = "DanceRead: No dance found"
         } else {
-            dance_textView.text = "DanceRead: " + dance.name
+            dance_textView.text = "DanceRead: " + dance.id + " " + dance.name
         }
     }
 

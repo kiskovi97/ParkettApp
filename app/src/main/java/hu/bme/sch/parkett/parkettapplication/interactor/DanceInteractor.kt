@@ -1,6 +1,6 @@
 package hu.bme.sch.parkett.parkettapplication.interactor
 
-import android.util.Log
+import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import hu.bme.sch.parkett.parkettapplication.model.DanceType
@@ -14,11 +14,11 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi) {
         Dance(-1,"DName","Content", DanceType(-1, "DTName","010101","image"))
     }
 
-    fun getDanceList(): List<Dance> {
+    fun getDanceList(){
         val event = GetDancesEvent()
         try {
-            val daccesQueryCall = dancesApi.getArtists()
-            val response = daccesQueryCall.execute()
+            val queryCall = dancesApi.getDances()
+            val response = queryCall.execute()
             if (response.code() != 200) {
                 throw Exception("Result code is not 200")
             }
@@ -29,14 +29,23 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi) {
             event.throwable = e
             EventBus.getDefault().post(event)
         }
-        return list
     }
 
-    fun getDance(id: Int): Dance? {
-        if (id >= list.size) {
-            return null
+    fun getDance(id: Int) {
+        val event = GetDanceEvent()
+        try {
+            val queryCall = dancesApi.getDance(id)
+            val response = queryCall.execute()
+            if (response.code() != 200) {
+                throw Exception("Result code is not 200")
+            }
+            event.code = response.code()
+            event.dance = response.body();
+            EventBus.getDefault().post(event)
+        } catch (e: Exception) {
+            event.throwable = e
+            EventBus.getDefault().post(event)
         }
-        return list[id]
     }
 
     fun addDance(dance: Dance) {}

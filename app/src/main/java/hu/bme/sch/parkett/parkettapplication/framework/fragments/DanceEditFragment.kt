@@ -52,7 +52,7 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
 
     override fun showDance(dance: Dance?) {
         if (dance != null) {
-            dance_edit_textView.text = "Edit: ${dance.name}"
+            dance_edit_textView.text = "Edit: ${dance.id} ${dance.name}"
         } else {
             dance_edit_textView.text = "Edit: No Dance found"
         }

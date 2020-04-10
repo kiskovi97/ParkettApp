@@ -48,7 +48,7 @@ class DanceListFragment : Fragment(), DanceListScreen {
     override fun showDanceList(result: List<Dance>) {
         var text = "{"
         for (dance in result) {
-            text += dance.name + ", "
+            text += "${dance.id}:${dance.name} "
         }
         text += "}"
         dance_list_textView.text = "DanceList: " + text

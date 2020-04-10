@@ -23,11 +23,11 @@ class ApplicationModule(
 
     @Provides
     @Singleton
-    fun danceEditPresenter(danceInteractor: DanceInteractor) = DanceEditPresenter(danceInteractor)
+    fun danceEditPresenter(executor: Executor, danceInteractor: DanceInteractor) = DanceEditPresenter(executor, danceInteractor)
 
     @Provides
     @Singleton
-    fun danceReadPresenter(danceInteractor: DanceInteractor) = DanceReadPresenter(danceInteractor)
+    fun danceReadPresenter(executor: Executor, danceInteractor: DanceInteractor) = DanceReadPresenter(executor, danceInteractor)
 
     @Provides
     @Singleton

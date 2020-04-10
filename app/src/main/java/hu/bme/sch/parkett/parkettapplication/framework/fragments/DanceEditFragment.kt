@@ -11,7 +11,6 @@ import hu.bme.sch.parkett.parkettapplication.di.injector
 import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceEditScreen
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceEditPresenter
-import hu.bme.sch.parkett.parkettapplication.presenter.DanceReadPresenter
 import kotlinx.android.synthetic.main.fragment_dance_edit.*
 import javax.inject.Inject
 
@@ -48,11 +47,20 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
     override fun onResume() {
         super.onResume()
         dancePresenter.showDance(danceId)
+        saveButton.setOnClickListener {
+            save()
+        }
+        deleteButton.setOnClickListener {
+            delete()
+        }
     }
 
     override fun showDance(dance: Dance?) {
         if (dance != null) {
             dance_edit_textView.text = "Edit: ${dance.id} ${dance.name}"
+            editDanceName.setText(dance.name)
+            editDanceContent.setText(dance.content)
+
         } else {
             dance_edit_textView.text = "Edit: No Dance found"
         }
@@ -60,6 +68,8 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
     }
 
     fun save() {
+        selectedDance?.name = editDanceName.text.toString()
+        selectedDance?.content = editDanceContent.text.toString()
         selectedDance?.let { dancePresenter.saveDance(it) }
     }
 

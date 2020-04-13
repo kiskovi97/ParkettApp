@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(view: View) {
         val intent = Intent(this, DanceActivity::class.java).apply {
-            putExtra(DanceActivity.DANCE_ID, 1001)
+            putExtra(DanceActivity.DANCE_ID, -1)
         }
         startActivity(intent)
     }

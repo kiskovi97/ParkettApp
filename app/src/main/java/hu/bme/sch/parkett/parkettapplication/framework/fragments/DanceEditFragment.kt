@@ -2,6 +2,7 @@ package hu.bme.sch.parkett.parkettapplication.framework.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
     @Inject
     lateinit var dancePresenter: DanceEditPresenter
 
-    private var selectedDance: Dance? = null
+    private var selectedDance: Dance = Dance(-1,null, null, null)
 
     private val danceId by lazy { arguments!!.getInt(DanceEditFragment.DANCE_ID) }
 
@@ -46,7 +47,9 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
 
     override fun onResume() {
         super.onResume()
-        dancePresenter.showDance(danceId)
+        if (danceId >= 0) {
+            dancePresenter.showDance(danceId)
+        }
         saveButton.setOnClickListener {
             save()
         }
@@ -64,17 +67,21 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
         } else {
             dance_edit_textView.text = "Edit: No Dance found"
         }
-        selectedDance = dance
+        if (dance != null) {
+            selectedDance = dance
+        }
     }
 
     fun save() {
-        selectedDance?.name = editDanceName.text.toString()
-        selectedDance?.content = editDanceContent.text.toString()
-        selectedDance?.let { dancePresenter.saveDance(it) }
+        Log.d("Saving", selectedDance.toString())
+
+        selectedDance.name = editDanceName.text.toString()
+        selectedDance.content = editDanceContent.text.toString()
+        selectedDance.let { dancePresenter.saveDance(it) }
     }
 
     fun delete() {
-        selectedDance?.let { dancePresenter.deleteDance(selectedDance!!.id)}
+        selectedDance.let { dancePresenter.deleteDance(selectedDance.id)}
     }
 
     companion object {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import hu.bme.sch.parkett.parkettapplication.R
 import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceListScreen
 import hu.bme.sch.parkett.parkettapplication.di.injector
@@ -46,12 +47,9 @@ class DanceListFragment : Fragment(), DanceListScreen {
     }
 
     override fun showDanceList(result: List<Dance>) {
-        var text = "{"
-        for (dance in result) {
-            text += "${dance.id}:${dance.name} "
-        }
-        text += "}"
-        dance_list_textView.text = "DanceList: " + text
+        danceListView.adapter = DanceAdapter(result)
+        danceListView.layoutManager = LinearLayoutManager(context)
+        danceListView.setHasFixedSize(true)
     }
 
     companion object {

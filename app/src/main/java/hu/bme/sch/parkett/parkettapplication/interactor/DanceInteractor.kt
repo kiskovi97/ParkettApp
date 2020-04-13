@@ -77,6 +77,7 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi) {
     }
 
     fun addDance(dance: Dance) {
+        Log.d("Adding Dance", dance.toString())
         dance.toDanceRecord().save()
     }
 

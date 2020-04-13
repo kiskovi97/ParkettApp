@@ -1,7 +1,10 @@
 package hu.bme.sch.parkett.parkettapplication.framework.fragments
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +14,6 @@ import hu.bme.sch.parkett.parkettapplication.di.injector
 import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceEditScreen
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceEditPresenter
-import hu.bme.sch.parkett.parkettapplication.presenter.DanceReadPresenter
 import kotlinx.android.synthetic.main.fragment_dance_edit.*
 import javax.inject.Inject
 
@@ -20,7 +22,7 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
     @Inject
     lateinit var dancePresenter: DanceEditPresenter
 
-    private var selectedDance: Dance? = null
+    private var selectedDance: Dance = Dance(-1,null, null, null)
 
     private val danceId by lazy { arguments!!.getInt(DanceEditFragment.DANCE_ID) }
 
@@ -47,24 +49,50 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
 
     override fun onResume() {
         super.onResume()
-        dancePresenter.showDance(danceId)
+        if (danceId >= 0) {
+            dancePresenter.showDance(danceId)
+        }
+        saveButton.setOnClickListener {
+            save()
+        }
+        deleteButton.setOnClickListener {
+            delete()
+        }
     }
 
     override fun showDance(dance: Dance?) {
         if (dance != null) {
-            dance_edit_textView.text = "Edit: ${dance.name}"
+            dance_edit_textView.text = "Edit: ${dance.id} ${dance.name}"
+            editDanceName.setText(dance.name)
+            editDanceContent.setText(dance.content)
+
         } else {
             dance_edit_textView.text = "Edit: No Dance found"
         }
-        selectedDance = dance
+        if (dance != null) {
+            selectedDance = dance
+        }
     }
 
     fun save() {
-        selectedDance?.let { dancePresenter.saveDance(it) }
+        Log.d("Saving", selectedDance.toString())
+
+        selectedDance.name = editDanceName.text.toString()
+        selectedDance.content = editDanceContent.text.toString()
+        dancePresenter.saveDance(selectedDance)
+        activity?.finish()
     }
 
     fun delete() {
-        selectedDance?.let { dancePresenter.deleteDance(selectedDance!!.id)}
+        AlertDialog.Builder(context)
+                .setTitle("Deleting dance")
+                .setMessage("Are you sure you want to delete " + selectedDance.id  + ":" +selectedDance.name+ "dance")
+                .setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+                    dancePresenter.deleteDance(selectedDance.id)
+                    activity?.finish()
+                }
+                .setNegativeButton("No", null)
+                .show()
     }
 
     companion object {

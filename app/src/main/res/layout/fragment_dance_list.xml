@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".framework.fragments.DanceListFragment">
-    <TextView
-        android:id="@+id/dance_list_textView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/danceListView"
+        android:padding="4dp"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:listitem="@layout/dance_list_item"/>
 
 </LinearLayout >

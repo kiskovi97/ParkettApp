@@ -1,6 +1,8 @@
 package hu.bme.sch.parkett.parkettapplication.framework.fragments
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -77,11 +79,20 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
 
         selectedDance.name = editDanceName.text.toString()
         selectedDance.content = editDanceContent.text.toString()
-        selectedDance.let { dancePresenter.saveDance(it) }
+        dancePresenter.saveDance(selectedDance)
+        activity?.finish()
     }
 
     fun delete() {
-        selectedDance.let { dancePresenter.deleteDance(selectedDance.id)}
+        AlertDialog.Builder(context)
+                .setTitle("Deleting dance")
+                .setMessage("Are you sure you want to delete " + selectedDance.id  + ":" +selectedDance.name+ "dance")
+                .setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+                    dancePresenter.deleteDance(selectedDance.id)
+                    activity?.finish()
+                }
+                .setNegativeButton("No", null)
+                .show()
     }
 
     companion object {

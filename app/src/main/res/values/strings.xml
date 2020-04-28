@@ -11,4 +11,5 @@
     <string name="name_of_dance">Name of Dance</string>
     <string name="content2">Content</string>
     <string name="lotOfSpace">x\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\n</string>
+    <string name="dance_type">dance type</string>
 </resources>

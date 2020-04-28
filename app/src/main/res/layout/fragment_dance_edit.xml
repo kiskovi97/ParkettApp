@@ -39,6 +39,19 @@
                             android:importantForAutofill="no"
                             android:inputType="textPersonName"
                             android:textColor="@color/editColor" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:labelFor="@id/editDanceContent"
+                            android:text="@string/dance_type"
+                            android:layout_margin="10dp" />
+
+                        <Spinner
+                            android:id="@+id/spinnerDanceType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/editColor"
+                            />
 
                         <TextView
                             android:layout_width="match_parent"

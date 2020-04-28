@@ -3,6 +3,7 @@ package hu.bme.sch.parkett.parkettapplication.presenter
 import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceEditScreen
 import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractor
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceEvent
+import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceTypeListEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import org.greenrobot.eventbus.EventBus
@@ -23,6 +24,12 @@ class DanceEditPresenter @Inject constructor(
     override fun detachScreen() {
         EventBus.getDefault().unregister(this)
         super.detachScreen()
+    }
+
+    fun refreshDanceTypeList() {
+        executor.execute {
+            danceInteractor.getDanceTypeList()
+        }
     }
 
     fun showDance(id: Int) {
@@ -52,6 +59,21 @@ class DanceEditPresenter @Inject constructor(
             if (screen != null) {
                 if (event.dance != null) {
                     screen?.showDance(event.dance)
+                }
+
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEventMainThread(event: GetDanceTypeListEvent) {
+        if (event.throwable != null) {
+            event.throwable?.printStackTrace()
+        } else {
+
+            if (screen != null) {
+                if (event.danceTypeList != null) {
+                    screen?.setDanceTypeList(event.danceTypeList!!)
                 }
 
             }

@@ -8,11 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import hu.bme.sch.parkett.parkettapplication.R
 import hu.bme.sch.parkett.parkettapplication.di.injector
 import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceEditScreen
 import hu.bme.sch.parkett.parkettapplication.model.Dance
+import hu.bme.sch.parkett.parkettapplication.model.DanceType
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceEditPresenter
 import kotlinx.android.synthetic.main.fragment_dance_edit.*
 import javax.inject.Inject
@@ -25,6 +28,8 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
     private var selectedDance: Dance = Dance(-1,null, null, null)
 
     private val danceId by lazy { arguments!!.getInt(DanceEditFragment.DANCE_ID) }
+
+    lateinit var options: MutableList<DanceType>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,6 +54,7 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
 
     override fun onResume() {
         super.onResume()
+        dancePresenter.refreshDanceTypeList()
         if (danceId >= 0) {
             dancePresenter.showDance(danceId)
         }
@@ -61,10 +67,36 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
         if (dance != null) {
             editDanceName.setText(dance.name)
             editDanceContent.setText(dance.content)
-
-        }
-        if (dance != null) {
             selectedDance = dance
+            val index = options.indexOf(selectedDance.dance_type)
+
+            if (index >= 0) {
+                spinnerDanceType.setSelection(index)
+            }
+        }
+    }
+
+    override fun setDanceTypeList(danceList: List<DanceType>) {
+        options = danceList.toMutableList()
+
+        spinnerDanceType.adapter = DanceTypeSpinnerAdapter(activity!!, R.layout.dance_type_spinner_item, options)
+
+        val index = options.indexOf(selectedDance.dance_type)
+
+        if (index >= 0) {
+            spinnerDanceType.setSelection(index)
+        }
+
+        spinnerDanceType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                selectedDance.dance_type = null
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position >= 0 && options.count() > position) {
+                    selectedDance.dance_type = options[position]
+                }
+            }
         }
     }
 

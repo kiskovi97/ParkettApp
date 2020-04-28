@@ -5,4 +5,5 @@
     android:id="@+id/fragment_dance_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:layout="@layout/fragment_dance_list" />
+    tools:layout="@layout/fragment_dance_list"
+    />

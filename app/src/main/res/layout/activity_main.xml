@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".framework.activities.MainActivity"
-    android:orientation="vertical">
+    android:background="#5A0000"
+    android:orientation="vertical"
+    tools:context=".framework.activities.MainActivity">
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#630505"
+        android:textColor="#FFFFFF"
         android:onClick="onClick"
-        android:text="New Dance"/>
+        android:layout_margin="10dp"
+        android:text="New Dance" />
 
-    <include layout="@layout/content_dance_list"/>
+    <include layout="@layout/content_dance_list" />
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import hu.bme.sch.parkett.parkettapplication.R
 import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceListScreen
@@ -48,7 +49,7 @@ class DanceListFragment : Fragment(), DanceListScreen {
 
     override fun showDanceList(result: List<Dance>) {
         danceListView.adapter = DanceAdapter(result)
-        danceListView.layoutManager = LinearLayoutManager(context)
+        danceListView.layoutManager = GridLayoutManager(context, 2)
         danceListView.setHasFixedSize(true)
     }
 

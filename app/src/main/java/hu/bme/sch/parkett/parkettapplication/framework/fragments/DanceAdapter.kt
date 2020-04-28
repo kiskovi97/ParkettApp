@@ -39,22 +39,27 @@ class DanceAdapter(private val danceList: List<Dance>) : RecyclerView.Adapter<Da
         val currentItem = danceList[position]
 
         holder.itemName.text = currentItem.name
-        holder.layout.setBackgroundColor(Color.parseColor(currentItem.dance_type?.color))
+        if (currentItem.dance_type != null) {
+            holder.layout.setBackgroundColor(Color.parseColor(currentItem.dance_type?.color))
 
-        val base64string = currentItem.dance_type?.image?.substring(22)
+            if (currentItem.dance_type?.image != null) {
+                val base64string = currentItem.dance_type?.image?.substring(22)
 
-        if (base64string != null) {
-            val imageBytes = Base64.decode(base64string, Base64.DEFAULT)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                val imageByteBuffer = ByteBuffer.wrap(imageBytes)
-                val source = ImageDecoder.createSource(imageByteBuffer)
-                val bitmap = ImageDecoder.decodeDrawable(source)
-                holder.image.setImageDrawable(bitmap)
-            } else {
-                val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                holder.image.setImageBitmap(decodedImage)
+                if (base64string != null) {
+                    val imageBytes = Base64.decode(base64string, Base64.DEFAULT)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        val imageByteBuffer = ByteBuffer.wrap(imageBytes)
+                        val source = ImageDecoder.createSource(imageByteBuffer)
+                        val bitmap = ImageDecoder.decodeDrawable(source)
+                        holder.image.setImageDrawable(bitmap)
+                    } else {
+                        val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                        holder.image.setImageBitmap(decodedImage)
+                    }
+                }
             }
         }
+
 
 
 

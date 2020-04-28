@@ -24,7 +24,6 @@ class DanceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dance)
         val id = intent.getIntExtra(DANCE_ID, -1)
-        dance_activity_debug.text = id.toString()
         selectedId = id
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

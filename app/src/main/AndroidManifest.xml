@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".framework.activities.DanceActivity" />
+        <activity android:name=".framework.activities.DanceActivity" android:parentActivityName=".framework.activities.MainActivity"/>
         <activity android:name=".framework.activities.MainActivity"  >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

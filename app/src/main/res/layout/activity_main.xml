@@ -11,19 +11,5 @@
         android:layout_height="match_parent"
         android:src="@drawable/background"
         android:scaleType="centerCrop"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#63500505"
-            android:textColor="#FFFFFF"
-            android:onClick="onClick"
-            android:layout_margin="10dp"
-            android:text="New Dance" />
-        <include layout="@layout/content_dance_list" />
-    </LinearLayout>
+    <include layout="@layout/content_dance_list" />
 </RelativeLayout>

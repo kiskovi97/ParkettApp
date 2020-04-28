@@ -1,7 +1,7 @@
 package hu.bme.sch.parkett.parkettapplication.framework.activities
 
-import android.app.AlertDialog
-import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,10 +10,6 @@ import androidx.core.content.ContextCompat
 import hu.bme.sch.parkett.parkettapplication.R
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceEditFragment
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceReadFragment
-import hu.bme.sch.parkett.parkettapplication.presenter.DanceEditPresenter
-import kotlinx.android.synthetic.main.activity_dance.*
-import okhttp3.internal.wait
-import javax.inject.Inject
 
 class DanceActivity : AppCompatActivity() {
 
@@ -24,6 +20,11 @@ class DanceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dance)
         val id = intent.getIntExtra(DANCE_ID, -1)
+        val color = intent.getStringExtra(DANCE_COLOR)
+        if (color != null) {
+            supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
+        }
+        
         selectedId = id
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -77,5 +78,6 @@ class DanceActivity : AppCompatActivity() {
 
     companion object {
         public const val DANCE_ID = "DANCE_ID"
+        public const val DANCE_COLOR = "DANCE_COLOR"
     }
 }

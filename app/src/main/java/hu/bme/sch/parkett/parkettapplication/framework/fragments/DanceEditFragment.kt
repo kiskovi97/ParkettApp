@@ -86,9 +86,9 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
     fun delete() {
         AlertDialog.Builder(context)
                 .setTitle("Deleting dance")
-                .setMessage("Are you sure you want to delete " + selectedDance.id  + ":" +selectedDance.name+ "dance")
+                .setMessage("Are you sure you want to delete dance with id: " + danceId)
                 .setPositiveButton("Yes") { _: DialogInterface, _: Int ->
-                    dancePresenter.deleteDance(selectedDance.id)
+                    dancePresenter.deleteDance(danceId)
                     activity?.finish()
                 }
                 .setNegativeButton("No", null)

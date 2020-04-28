@@ -1,5 +1,7 @@
 package hu.bme.sch.parkett.parkettapplication.framework.activities
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,7 +10,10 @@ import androidx.core.content.ContextCompat
 import hu.bme.sch.parkett.parkettapplication.R
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceEditFragment
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceReadFragment
+import hu.bme.sch.parkett.parkettapplication.presenter.DanceEditPresenter
 import kotlinx.android.synthetic.main.activity_dance.*
+import okhttp3.internal.wait
+import javax.inject.Inject
 
 class DanceActivity : AppCompatActivity() {
 
@@ -21,9 +26,15 @@ class DanceActivity : AppCompatActivity() {
         val id = intent.getIntExtra(DANCE_ID, -1)
         dance_activity_debug.text = id.toString()
         selectedId = id
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_dance_read, DanceReadFragment.newInstance(id)).commit()
-        edit = false
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        if (selectedId == -1) {
+            edit = true
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_dance_read, DanceEditFragment.newInstance(id)).commit()
+        } else {
+            edit = false
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_dance_read, DanceReadFragment.newInstance(id)).commit()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -34,7 +45,7 @@ class DanceActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.deleteIcon -> {
-
+                delete()
             }
             R.id.editIcon -> {
                 if (selectedId != null) {
@@ -52,6 +63,16 @@ class DanceActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun delete() {
+        if (edit) {
+            val fragment = supportFragmentManager.findFragmentById(R.id.fragment_dance_read) as DanceEditFragment
+            fragment.delete()
+        } else {
+            val fragment = supportFragmentManager.findFragmentById(R.id.fragment_dance_read) as DanceReadFragment
+            fragment.delete()
+        }
     }
 
 

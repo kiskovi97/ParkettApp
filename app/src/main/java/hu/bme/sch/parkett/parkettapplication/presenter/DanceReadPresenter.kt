@@ -32,6 +32,10 @@ class DanceReadPresenter @Inject constructor(
         }
     }
 
+    fun deleteDance(id: Int) {
+        danceInteractor.deleteDance(id)
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEventMainThread(event: GetDanceEvent) {
         if (event.throwable != null) {

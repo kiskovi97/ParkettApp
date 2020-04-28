@@ -1,6 +1,8 @@
 package hu.bme.sch.parkett.parkettapplication.framework.fragments
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -54,6 +56,18 @@ class DanceReadFragment : Fragment(), DanceReadScreen {
         } else {
             dance_textView.text = "DanceRead: " + dance.id + " " + dance.name
         }
+    }
+
+    fun delete() {
+        AlertDialog.Builder(context)
+                .setTitle("Deleting dance")
+                .setMessage("Are you sure you want to delete dance with id: " + danceId)
+                .setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+                    dancePresenter.deleteDance(danceId)
+                    activity?.finish()
+                }
+                .setNegativeButton("No", null)
+                .show()
     }
 
     companion object {

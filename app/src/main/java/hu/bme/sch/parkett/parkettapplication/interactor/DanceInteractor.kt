@@ -2,6 +2,7 @@ package hu.bme.sch.parkett.parkettapplication.interactor
 
 import android.util.Log
 import com.orm.SugarRecord
+import com.orm.SugarRecord.SUGAR
 import com.orm.SugarRecord.findById
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
@@ -40,7 +41,9 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi) {
                 throw Exception("Result code is not 200")
             }
             for (dance in response.body()!!) {
-                dance.toDanceRecord().save()
+                val danceRecord = dance.toDanceRecord()
+                danceRecord.dance_type?.save()
+                danceRecord.save()
             }
         } catch (e: Exception) {
             Log.w("API Error",e)

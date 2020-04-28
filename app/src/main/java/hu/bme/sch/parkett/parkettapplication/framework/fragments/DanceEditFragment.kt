@@ -55,26 +55,20 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
         saveButton.setOnClickListener {
             save()
         }
-        deleteButton.setOnClickListener {
-            delete()
-        }
     }
 
     override fun showDance(dance: Dance?) {
         if (dance != null) {
-            dance_edit_textView.text = "Edit: ${dance.id} ${dance.name}"
             editDanceName.setText(dance.name)
             editDanceContent.setText(dance.content)
 
-        } else {
-            dance_edit_textView.text = "Edit: No Dance found"
         }
         if (dance != null) {
             selectedDance = dance
         }
     }
 
-    fun save() {
+    private fun save() {
         Log.d("Saving", selectedDance.toString())
 
         selectedDance.name = editDanceName.text.toString()

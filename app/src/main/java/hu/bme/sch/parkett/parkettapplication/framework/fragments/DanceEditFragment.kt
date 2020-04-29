@@ -105,6 +105,10 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
 
         selectedDance.name = editDanceName.text.toString()
         selectedDance.content = editDanceContent.text.toString()
+
+        val selectedDanceType = spinnerDanceType.selectedItem as DanceType
+        selectedDance.dance_type = selectedDanceType
+
         dancePresenter.saveDance(selectedDance)
         activity?.finish()
     }

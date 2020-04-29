@@ -12,4 +12,5 @@
     <string name="content2">Content</string>
     <string name="lotOfSpace">x\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\n</string>
     <string name="dance_type">dance type</string>
+    <string name="image_content_description">Image Of Dance</string>
 </resources>

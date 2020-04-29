@@ -18,7 +18,9 @@ class DanceEditPresenter @Inject constructor(
 ) : Presenter<DanceEditScreen>() {
     override fun attachScreen(screen: DanceEditScreen) {
         super.attachScreen(screen)
-        EventBus.getDefault().register(this)
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
     }
 
     override fun detachScreen() {

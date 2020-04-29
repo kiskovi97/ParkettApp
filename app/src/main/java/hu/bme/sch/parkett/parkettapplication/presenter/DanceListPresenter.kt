@@ -1,5 +1,6 @@
 package hu.bme.sch.parkett.parkettapplication.presenter
 
+import android.util.EventLog
 import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceListScreen
 import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractor
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
@@ -18,7 +19,9 @@ class DanceListPresenter @Inject constructor(
 
     override fun attachScreen(screen: DanceListScreen) {
         super.attachScreen(screen)
-        EventBus.getDefault().register(this)
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
     }
 
     override fun detachScreen() {

@@ -7,22 +7,29 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import hu.bme.sch.parkett.parkettapplication.R
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceEditFragment
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceReadFragment
 
 class DanceActivity : AppCompatActivity() {
 
-    var selectedId: Int? = null
-    var edit: Boolean = false
+    private var selectedId: Int? = null
+    private var edit: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dance)
         val id = intent.getIntExtra(DANCE_ID, -1)
-        val color = intent.getStringExtra(DANCE_COLOR)
-        if (color != null) {
-            supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
+        if (id != -1) {
+            val color = intent.getStringExtra(DANCE_COLOR)
+            if (color != null) {
+                supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor(color)))
+            }
+            val name = intent.getStringExtra(DANCE_NAME)
+            supportActionBar?.title = name
+        } else {
+            supportActionBar?.title = "New Dance"
         }
         
         selectedId = id
@@ -39,6 +46,16 @@ class DanceActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.readview_menu, menu)
+
+        if (selectedId == -1) {
+            val item0 = menu?.getItem(0)
+            item0?.isEnabled = false
+            item0?.isVisible = false
+            val item1 = menu?.getItem(1)
+            item1?.isEnabled = false
+            item1?.isVisible = false
+        }
+
         return true
     }
 
@@ -79,5 +96,6 @@ class DanceActivity : AppCompatActivity() {
     companion object {
         public const val DANCE_ID = "DANCE_ID"
         public const val DANCE_COLOR = "DANCE_COLOR"
+        public const val DANCE_NAME = "DANCE_NAME"
     }
 }

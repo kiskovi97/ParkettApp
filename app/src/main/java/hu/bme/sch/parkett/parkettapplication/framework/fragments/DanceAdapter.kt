@@ -67,6 +67,7 @@ class DanceAdapter(private val danceList: List<Dance>) : RecyclerView.Adapter<Da
             val intent = Intent(it.context, DanceActivity::class.java).apply {
                 putExtra(DanceActivity.DANCE_ID, currentItem.id)
                 putExtra(DanceActivity.DANCE_COLOR, currentItem.dance_type?.color)
+                putExtra(DanceActivity.DANCE_NAME, currentItem.name)
             }
             it.context.startActivity(intent)
         }

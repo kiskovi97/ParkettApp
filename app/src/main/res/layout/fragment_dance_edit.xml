@@ -26,7 +26,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:labelFor="@id/editDanceName"
-                            android:text="@string/name"
+                            android:text="@string/edit_name"
                             android:layout_margin="10dp"
                             />
 
@@ -35,7 +35,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:hint="@string/name_of_dance"
+                            android:hint="@string/edit_name_hint"
                             android:importantForAutofill="no"
                             android:inputType="textPersonName"
                             android:textColor="@color/editColor" />
@@ -43,7 +43,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:labelFor="@id/editDanceContent"
-                            android:text="@string/dance_type"
+                            android:text="@string/edit_dance_type"
                             android:layout_margin="10dp" />
 
                         <Spinner
@@ -57,14 +57,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:labelFor="@id/editDanceContent"
-                            android:text="@string/content"
+                            android:text="@string/edit_content"
                             android:layout_margin="10dp" />
 
                         <EditText
                             android:id="@+id/editDanceContent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/content2"
+                            android:hint="@string/edit_content_hint"
                             android:importantForAutofill="no"
                             android:inputType="textMultiLine"
                             android:textColor="@color/editColor" />
@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorOkButton"
-            android:text="@string/save"
+            android:text="@string/save_button"
             android:layout_margin="10dp"
             android:layout_alignParentBottom="true"/>
 </RelativeLayout>

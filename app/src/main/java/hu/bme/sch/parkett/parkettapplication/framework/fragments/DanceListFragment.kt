@@ -1,16 +1,16 @@
 package hu.bme.sch.parkett.parkettapplication.framework.fragments
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import hu.bme.sch.parkett.parkettapplication.R
-import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceListScreen
 import hu.bme.sch.parkett.parkettapplication.di.injector
+import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceListScreen
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceListPresenter
 import kotlinx.android.synthetic.main.fragment_dance_list.*
@@ -49,12 +49,19 @@ class DanceListFragment : Fragment(), DanceListScreen {
     override fun onResume() {
         super.onResume()
         danceListPresenter.refreshDanceList()
+
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            danceListView.layoutManager = GridLayoutManager(context, 3)
+        } else {
+            danceListView.layoutManager = GridLayoutManager(context, 2)
+        }
+
+        danceListView.setHasFixedSize(true)
     }
 
     override fun showDanceList(result: List<Dance>) {
         danceListView.adapter = DanceAdapter(result)
-        danceListView.layoutManager = GridLayoutManager(context, 2)
-        danceListView.setHasFixedSize(true)
     }
 
     companion object {

@@ -34,12 +34,16 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this);
+    }
+
+    override fun onStart() {
+        super.onStart()
         dancePresenter.attachScreen(this)
     }
 
-    override fun onDetach() {
+    override fun onStop() {
         dancePresenter.detachScreen()
-        super.onDetach()
+        super.onStop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

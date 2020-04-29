@@ -24,12 +24,16 @@ class DanceListFragment : Fragment(), DanceListScreen {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this);
+    }
+
+    override fun onStart() {
+        super.onStart()
         danceListPresenter.attachScreen(this)
     }
 
-    override fun onDetach() {
+    override fun onStop() {
         danceListPresenter.detachScreen()
-        super.onDetach()
+        super.onStop()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

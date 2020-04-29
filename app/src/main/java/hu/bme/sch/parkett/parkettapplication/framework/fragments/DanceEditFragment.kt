@@ -118,7 +118,7 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
     }
 
     fun delete() {
-        AlertDialog.Builder(context)
+        AlertDialog.Builder(context, R.style.AlertDialogTheme)
                 .setTitle("Deleting dance")
                 .setMessage("Are you sure you want to delete dance with id: " + danceId)
                 .setPositiveButton("Yes") { _: DialogInterface, _: Int ->

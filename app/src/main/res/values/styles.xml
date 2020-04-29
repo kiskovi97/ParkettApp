@@ -9,5 +9,7 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textColorHint">#AA7474</item>
     </style>
-
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 </resources>

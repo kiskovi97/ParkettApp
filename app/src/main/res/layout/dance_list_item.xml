@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@android:color/holo_red_dark">
+        android:background="@color/colorPrimaryDark">
 
         <ImageView
             android:id="@+id/cardImageView"
@@ -18,7 +18,7 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_gravity="center"
-            android:contentDescription="ImageContent"
+            android:contentDescription="@string/image_content_description"
             android:maxWidth="150dp"
              />
 
@@ -27,9 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center"
-            android:text="This is an example text" />
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

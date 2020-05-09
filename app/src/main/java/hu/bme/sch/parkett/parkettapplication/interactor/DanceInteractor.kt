@@ -23,8 +23,7 @@ class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork
         val event = GetDanceTypeListEvent()
         refreshDanceTypesFromAPI()
         try {
-            val danceTypeRecordList = SugarRecord.listAll(DanceTypeRecord::class.java)
-            event.danceTypeList = danceTypeRecordList.map { value -> value.toDanceType()  }
+            event.danceTypeList = database.listAllDanceType()
             event.code = 200
             EventBus.getDefault().post(event)
         } catch (e: Exception) {
@@ -37,8 +36,7 @@ class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork
         val event = GetDancesEvent()
         refreshDancesFromAPI()
         try {
-            val danceRecordList = SugarRecord.listAll(DanceRecord::class.java)
-            event.danceList = danceRecordList.map { value -> value.toDance()  }
+            event.danceList = database.listAllDance()
             event.code = 200
             EventBus.getDefault().post(event)
         } catch (e: Exception) {
@@ -52,9 +50,7 @@ class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork
         firstTime = false
         val dances = danceNetwork.getDances()
         for (dance in dances) {
-            val danceRecord = dance.toDanceRecord()
-            danceRecord.dance_type?.save()
-            danceRecord.save()
+            database.save(dance)
         }
     }
 
@@ -64,7 +60,7 @@ class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork
         try {
             val danceTypes = danceNetwork.getDanceTypes()
             for (danceType in danceTypes) {
-                danceType.toDanceTypeRecord().save()
+                database.save(danceType)
             }
         } catch (e: Exception) {
             Log.w("API Error",e)
@@ -73,15 +69,13 @@ class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork
 
     fun getDance(id: Int) {
         val event = GetDanceEvent()
-        var danceRecord = findById(DanceRecord::class.java, id)
-        Log.d("Help", danceRecord?.name + "_"+danceRecord?.id)
-        if (danceRecord == null) {
-            val dance = getDanceFromAPI(id)
-            danceRecord = dance?.toDanceRecord()
-            danceRecord?.save()
+        var dance = database.getDance(id)
+        if (dance == null) {
+            val danceFromApi = getDanceFromAPI(id)
+            database.save(danceFromApi)
+            dance = danceFromApi
         }
-        Log.d("Help", danceRecord?.name + "_"+danceRecord?.id)
-        event.dance = danceRecord?.toDance()
+        event.dance = dance
         event.code = 200
         EventBus.getDefault().post(event)
     }

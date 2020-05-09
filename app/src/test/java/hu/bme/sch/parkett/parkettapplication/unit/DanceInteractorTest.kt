@@ -49,10 +49,6 @@ class DanceInteractorTest {
         //Arrange
         val mockedDataBase = mock(DataBase::class.java)
         val interactor = DanceInteractor(mock(DancesApi::class.java), mockedDataBase)
-
-        val context = mock(Context::class.java)
-        SugarContext.init(context)
-
         //Act
         interactor.deleteDance(1)
 

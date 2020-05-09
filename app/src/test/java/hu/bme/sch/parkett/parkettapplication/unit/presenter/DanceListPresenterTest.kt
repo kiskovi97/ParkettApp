@@ -90,7 +90,6 @@ class DanceListPresenterTest {
         //Arrange
         val presenter = DanceListPresenter(executor, interactor, eventBus)
         val event = GetDancesEvent()
-        val dance = Dance(2,null,null,null)
         event.throwable = null
         event.danceList = mutableListOf()
 
@@ -107,7 +106,6 @@ class DanceListPresenterTest {
         //Arrange
         val presenter = DanceListPresenter(executor, interactor, eventBus)
         val event = GetDancesEvent()
-        val dance = Dance(2,null,null,null)
         event.throwable = null
         event.danceList = listOf()
 

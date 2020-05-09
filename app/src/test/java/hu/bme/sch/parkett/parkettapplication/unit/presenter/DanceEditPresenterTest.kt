@@ -220,7 +220,6 @@ class DanceEditPresenterTest {
         //Arrange
         val presenter = DanceEditPresenter(executor, interactor, eventBus)
         val event = GetDanceTypeListEvent()
-        val dance = Dance(2,null,null,null)
         event.throwable = null
         event.danceTypeList = listOf()
 

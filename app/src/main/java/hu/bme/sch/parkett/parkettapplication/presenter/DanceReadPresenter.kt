@@ -11,17 +11,18 @@ import javax.inject.Inject
 
 class DanceReadPresenter @Inject constructor(
         private val executor: Executor,
-        private val danceInteractor: DanceInteractor
+        private val danceInteractor: DanceInteractor,
+        private val eventBus: EventBus
 ) : Presenter<DanceReadScreen>() {
     override fun attachScreen(screen: DanceReadScreen) {
         super.attachScreen(screen)
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this)
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this)
         }
     }
 
     override fun detachScreen() {
-        EventBus.getDefault().unregister(this)
+        eventBus.unregister(this)
         super.detachScreen()
     }
 

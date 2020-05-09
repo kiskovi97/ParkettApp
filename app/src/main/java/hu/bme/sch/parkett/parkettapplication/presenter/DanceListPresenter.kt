@@ -12,13 +12,14 @@ import javax.inject.Inject
 
 class DanceListPresenter @Inject constructor(
         private val executor: Executor,
-        private val danceInteractor: DanceInteractor
+        private val danceInteractor: DanceInteractor,
+        private val eventBus: EventBus
 ) : Presenter<DanceListScreen>() {
 
     override fun attachScreen(screen: DanceListScreen) {
         super.attachScreen(screen)
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this)
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this)
         }
     }
 

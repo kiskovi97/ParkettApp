@@ -26,15 +26,15 @@ class ApplicationModule(
 
     @Provides
     @Singleton
-    fun danceEditPresenter(executor: Executor, danceInteractor: DanceInteractor) = DanceEditPresenter(executor, danceInteractor)
+    fun danceEditPresenter(executor: Executor, danceInteractor: DanceInteractor) = DanceEditPresenter(executor, danceInteractor, EventBus.getDefault())
 
     @Provides
     @Singleton
-    fun danceReadPresenter(executor: Executor, danceInteractor: DanceInteractor) = DanceReadPresenter(executor, danceInteractor)
+    fun danceReadPresenter(executor: Executor, danceInteractor: DanceInteractor) = DanceReadPresenter(executor, danceInteractor, EventBus.getDefault())
 
     @Provides
     @Singleton
-    fun danceListPresenter(executor: Executor, danceInteractor: DanceInteractor) = DanceListPresenter(executor, danceInteractor)
+    fun danceListPresenter(executor: Executor, danceInteractor: DanceInteractor) = DanceListPresenter(executor, danceInteractor, EventBus.getDefault())
 
     @Provides
     @Singleton

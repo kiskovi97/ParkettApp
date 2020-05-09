@@ -4,7 +4,6 @@ import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceEditScreen
 import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractor
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceTypeListEvent
-import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

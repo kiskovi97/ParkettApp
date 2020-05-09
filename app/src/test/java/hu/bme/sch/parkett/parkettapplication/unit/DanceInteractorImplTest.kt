@@ -1,23 +1,22 @@
 package hu.bme.sch.parkett.parkettapplication.unit
 
 import hu.bme.sch.parkett.parkettapplication.database.DataBase
-import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractor
+import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractorImpl
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceTypeListEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
 import hu.bme.sch.parkett.parkettapplication.model.Dance
-import hu.bme.sch.parkett.parkettapplication.model.DanceType
 import hu.bme.sch.parkett.parkettapplication.network.DanceNetwork
 import org.greenrobot.eventbus.EventBus
 import org.junit.Test
 import org.mockito.Mockito.*
 
-class DanceInteractorTest {
+class DanceInteractorImplTest {
     @Test
     fun addDance_HappyPath() {
         //Arrange
         val mockedDataBase = mock(DataBase::class.java)
-        val interactor = DanceInteractor(mock(DanceNetwork::class.java), mockedDataBase, EventBus.getDefault())
+        val interactor = DanceInteractorImpl(mock(DanceNetwork::class.java), mockedDataBase, EventBus.getDefault())
         val addedDance = Dance(-1, "MockDance",null,null)
 
         //Act
@@ -31,7 +30,7 @@ class DanceInteractorTest {
     fun saveDance_HappyPath() {
         //Arrange
         val mockedDataBase = mock(DataBase::class.java)
-        val interactor = DanceInteractor(mock(DanceNetwork::class.java), mockedDataBase, EventBus.getDefault())
+        val interactor = DanceInteractorImpl(mock(DanceNetwork::class.java), mockedDataBase, EventBus.getDefault())
         val addedDance = Dance(-1, "MockDance",null,null)
 
         //Act
@@ -45,7 +44,7 @@ class DanceInteractorTest {
     fun deleteDance_HappyPath() {
         //Arrange
         val mockedDataBase = mock(DataBase::class.java)
-        val interactor = DanceInteractor(mock(DanceNetwork::class.java), mockedDataBase, EventBus.getDefault())
+        val interactor = DanceInteractorImpl(mock(DanceNetwork::class.java), mockedDataBase, EventBus.getDefault())
 
         //Act
         interactor.deleteDance(1)
@@ -60,7 +59,7 @@ class DanceInteractorTest {
         val mockedDataBase = mock(DataBase::class.java)
         val mockedDanceNetwork = mock(DanceNetwork::class.java)
         val eventBus = spy(EventBus.getDefault())
-        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+        val interactor = DanceInteractorImpl(mockedDanceNetwork, mockedDataBase, eventBus)
         `when`(mockedDanceNetwork.getDanceTypes()).thenReturn(listOf())
         `when`(mockedDataBase.getAllDanceType()).thenReturn(listOf())
 
@@ -83,7 +82,7 @@ class DanceInteractorTest {
         val mockedDataBase = mock(DataBase::class.java)
         val mockedDanceNetwork = mock(DanceNetwork::class.java)
         val eventBus = spy(EventBus.getDefault())
-        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+        val interactor = DanceInteractorImpl(mockedDanceNetwork, mockedDataBase, eventBus)
         `when`(mockedDanceNetwork.getDances()).thenReturn(listOf())
         `when`(mockedDataBase.getAllDance()).thenReturn(listOf())
 
@@ -106,7 +105,7 @@ class DanceInteractorTest {
         val mockedDataBase = mock(DataBase::class.java)
         val mockedDanceNetwork = mock(DanceNetwork::class.java)
         val eventBus = spy(EventBus.getDefault())
-        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+        val interactor = DanceInteractorImpl(mockedDanceNetwork, mockedDataBase, eventBus)
 
         val dance = Dance(0,"Dance", null, null)
         val list = listOf<Dance>(dance)
@@ -133,7 +132,7 @@ class DanceInteractorTest {
         val mockedDataBase = mock(DataBase::class.java)
         val mockedDanceNetwork = mock(DanceNetwork::class.java)
         val eventBus = spy(EventBus.getDefault())
-        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+        val interactor = DanceInteractorImpl(mockedDanceNetwork, mockedDataBase, eventBus)
 
         val dance = Dance(0,"Dance", null, null)
         val list = listOf<Dance>(dance)
@@ -161,7 +160,7 @@ class DanceInteractorTest {
         val mockedDataBase = mock(DataBase::class.java)
         val mockedDanceNetwork = mock(DanceNetwork::class.java)
         val eventBus = spy(EventBus.getDefault())
-        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+        val interactor = DanceInteractorImpl(mockedDanceNetwork, mockedDataBase, eventBus)
 
         val dance = Dance(1,"name", null, null)
         `when`(mockedDataBase.getDance(1)).thenReturn(dance)
@@ -185,7 +184,7 @@ class DanceInteractorTest {
         val mockedDataBase = mock(DataBase::class.java)
         val mockedDanceNetwork = mock(DanceNetwork::class.java)
         val eventBus = spy(EventBus.getDefault())
-        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+        val interactor = DanceInteractorImpl(mockedDanceNetwork, mockedDataBase, eventBus)
 
         val dance = Dance(1,"name", null, null)
         `when`(mockedDataBase.getDance(1)).thenReturn(null)

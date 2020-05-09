@@ -24,7 +24,7 @@ class DanceListPresenter @Inject constructor(
     }
 
     override fun detachScreen() {
-        EventBus.getDefault().unregister(this)
+        eventBus.unregister(this)
         super.detachScreen()
     }
 

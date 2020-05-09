@@ -3,6 +3,7 @@ package hu.bme.sch.parkett.parkettapplication.interactor
 import android.util.Log
 import com.orm.SugarRecord
 import com.orm.SugarRecord.findById
+import hu.bme.sch.parkett.parkettapplication.database.DataBase
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceTypeListEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
@@ -14,7 +15,7 @@ import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 
-class DanceInteractor @Inject constructor(private var dancesApi: DancesApi) {
+class DanceInteractor @Inject constructor(private var dancesApi: DancesApi, private var database: DataBase) {
 
     private var firstTime = true
 
@@ -113,7 +114,7 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi) {
 
     fun addDance(dance: Dance) {
         Log.d("Adding Dance", dance.toString())
-        dance.toDanceRecord().save()
+        database.save(dance)
     }
 
     fun deleteDance(id: Int?) {
@@ -122,7 +123,7 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi) {
     }
 
     fun saveDance(dance: Dance) {
-        Log.d("Help", dance.name + "_"+dance.id)
-        dance.toDanceRecord().save()
+        Log.d("Saving Dance",dance.toString())
+        database.save(dance)
     }
 }

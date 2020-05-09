@@ -3,6 +3,7 @@ package hu.bme.sch.parkett.parkettapplication.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import hu.bme.sch.parkett.parkettapplication.database.DataBase
 import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractor
 import hu.bme.sch.parkett.parkettapplication.network.DancesApi
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceEditPresenter
@@ -19,7 +20,7 @@ class ApplicationModule(
 
     @Provides
     @Singleton
-    fun provideDanceInteractor(dancesApi: DancesApi) = DanceInteractor(dancesApi)
+    fun provideDanceInteractor(dancesApi: DancesApi, database: DataBase) = DanceInteractor(dancesApi, database)
 
     @Provides
     @Singleton

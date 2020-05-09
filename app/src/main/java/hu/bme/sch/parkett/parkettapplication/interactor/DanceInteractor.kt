@@ -117,9 +117,8 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi, priv
         database.save(dance)
     }
 
-    fun deleteDance(id: Int?) {
-        val book: DanceRecord = findById(DanceRecord::class.java, id)
-        book.delete()
+    fun deleteDance(id: Int) {
+        database.delete(id)
     }
 
     fun saveDance(dance: Dance) {

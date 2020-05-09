@@ -4,4 +4,5 @@ import hu.bme.sch.parkett.parkettapplication.model.Dance
 
 interface DataBase {
     fun save(dance: Dance)
+    fun delete(id: Int)
 }

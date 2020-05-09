@@ -23,9 +23,6 @@ class DanceInteractorTest {
         val interactor = DanceInteractor(mock(DancesApi::class.java), mockedDataBase)
         val addedDance = Dance(-1, "MockDance",null,null)
 
-        val context = mock(Context::class.java)
-        SugarContext.init(context)
-
         //Act
         interactor.addDance(addedDance)
 
@@ -40,13 +37,26 @@ class DanceInteractorTest {
         val interactor = DanceInteractor(mock(DancesApi::class.java), mockedDataBase)
         val addedDance = Dance(-1, "MockDance",null,null)
 
-        val context = mock(Context::class.java)
-        SugarContext.init(context)
-
         //Act
         interactor.saveDance(addedDance)
 
         //Assert
         verify(mockedDataBase).save(addedDance)
+    }
+
+    @Test
+    fun deleteDance_HappyPath() {
+        //Arrange
+        val mockedDataBase = mock(DataBase::class.java)
+        val interactor = DanceInteractor(mock(DancesApi::class.java), mockedDataBase)
+
+        val context = mock(Context::class.java)
+        SugarContext.init(context)
+
+        //Act
+        interactor.deleteDance(1)
+
+        //Assert
+        verify(mockedDataBase).delete(1)
     }
 }

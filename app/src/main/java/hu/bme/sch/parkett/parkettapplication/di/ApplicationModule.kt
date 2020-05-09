@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import hu.bme.sch.parkett.parkettapplication.database.DataBase
 import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractor
+import hu.bme.sch.parkett.parkettapplication.network.DanceNetwork
 import hu.bme.sch.parkett.parkettapplication.network.DancesApi
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceEditPresenter
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceListPresenter
@@ -20,7 +21,7 @@ class ApplicationModule(
 
     @Provides
     @Singleton
-    fun provideDanceInteractor(dancesApi: DancesApi, database: DataBase) = DanceInteractor(dancesApi, database)
+    fun provideDanceInteractor(danceNetwork: DanceNetwork, database: DataBase) = DanceInteractor(danceNetwork, database)
 
     @Provides
     @Singleton

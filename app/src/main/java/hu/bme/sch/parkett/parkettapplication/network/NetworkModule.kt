@@ -28,4 +28,8 @@ class NetworkModule {
                 .build()
         return retrofit.create(DancesApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideNetwork(api: DancesApi) : DanceNetwork = DanceNetworkImpl(api)
 }

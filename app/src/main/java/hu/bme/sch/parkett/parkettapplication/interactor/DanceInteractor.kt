@@ -10,12 +10,12 @@ import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import hu.bme.sch.parkett.parkettapplication.model.DanceRecord
 import hu.bme.sch.parkett.parkettapplication.model.DanceTypeRecord
-import hu.bme.sch.parkett.parkettapplication.network.DancesApi
+import hu.bme.sch.parkett.parkettapplication.network.DanceNetwork
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 
-class DanceInteractor @Inject constructor(private var dancesApi: DancesApi, private var database: DataBase) {
+class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork, private var database: DataBase) {
 
     private var firstTime = true
 
@@ -50,19 +50,11 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi, priv
     private fun refreshDancesFromAPI() {
         if (!firstTime) return
         firstTime = false
-        try {
-            val queryCall = dancesApi.getDances()
-            val response = queryCall.execute()
-            if (response.code() != 200) {
-                throw Exception("Result code is not 200")
-            }
-            for (dance in response.body()!!) {
-                val danceRecord = dance.toDanceRecord()
-                danceRecord.dance_type?.save()
-                danceRecord.save()
-            }
-        } catch (e: Exception) {
-            Log.w("API Error",e)
+        val dances = danceNetwork.getDances()
+        for (dance in dances) {
+            val danceRecord = dance.toDanceRecord()
+            danceRecord.dance_type?.save()
+            danceRecord.save()
         }
     }
 
@@ -70,12 +62,8 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi, priv
         if (!firstTime) return
         firstTime = false
         try {
-            val queryCall = dancesApi.getDanceTypes()
-            val response = queryCall.execute()
-            if (response.code() != 200) {
-                throw Exception("Result code is not 200")
-            }
-            for (danceType in response.body()!!) {
+            val danceTypes = danceNetwork.getDanceTypes()
+            for (danceType in danceTypes) {
                 danceType.toDanceTypeRecord().save()
             }
         } catch (e: Exception) {
@@ -100,12 +88,7 @@ class DanceInteractor @Inject constructor(private var dancesApi: DancesApi, priv
 
     private fun getDanceFromAPI(id: Int): Dance? {
         try {
-            val queryCall = dancesApi.getDance(id)
-            val response = queryCall.execute()
-            if (response.code() != 200) {
-                throw Exception("Result code is not 200")
-            }
-            return response.body()
+            return danceNetwork.getDance(id)
         } catch (e: Exception) {
             e.fillInStackTrace()
         }

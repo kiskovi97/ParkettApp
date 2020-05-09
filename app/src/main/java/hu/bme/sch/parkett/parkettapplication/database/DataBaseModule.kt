@@ -10,7 +10,5 @@ class DataBaseModule {
 
     @Provides
     @Singleton
-    fun provideDancesApi(client: OkHttpClient): DataBase {
-        return DataBaseImpl()
-    }
+    fun provideDancesApi(): DataBase = DataBaseImpl()
 }

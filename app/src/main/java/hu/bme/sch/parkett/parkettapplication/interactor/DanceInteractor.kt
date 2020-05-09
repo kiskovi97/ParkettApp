@@ -73,7 +73,7 @@ class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork
         }
         event.dance = dance
         event.code = 200
-        EventBus.getDefault().post(event)
+        eventBus.post(event)
     }
 
     private fun getDanceFromAPI(id: Int): Dance? {

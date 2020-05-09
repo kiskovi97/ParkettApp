@@ -2,7 +2,9 @@ package hu.bme.sch.parkett.parkettapplication.unit
 
 import hu.bme.sch.parkett.parkettapplication.database.DataBase
 import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractor
+import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceTypeListEvent
+import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import hu.bme.sch.parkett.parkettapplication.model.DanceType
 import hu.bme.sch.parkett.parkettapplication.network.DanceNetwork
@@ -11,8 +13,6 @@ import org.junit.Test
 import org.mockito.Mockito.*
 
 class DanceInteractorTest {
-
-
     @Test
     fun addDance_HappyPath() {
         //Arrange
@@ -73,6 +73,133 @@ class DanceInteractorTest {
 
         val outEvent = GetDanceTypeListEvent()
         outEvent.danceTypeList = listOf()
+        outEvent.code = 200
+        verify(eventBus).post(outEvent)
+    }
+
+    @Test
+    fun getDances_EmptyLists_HappyPath() {
+        //Arrange
+        val mockedDataBase = mock(DataBase::class.java)
+        val mockedDanceNetwork = mock(DanceNetwork::class.java)
+        val eventBus = spy(EventBus.getDefault())
+        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+        `when`(mockedDanceNetwork.getDances()).thenReturn(listOf())
+        `when`(mockedDataBase.getAllDance()).thenReturn(listOf())
+
+        //Act
+        interactor.getDanceList()
+
+        //Assert
+        verify(mockedDataBase).getAllDance()
+        verify(mockedDanceNetwork).getDances()
+
+        val outEvent = GetDancesEvent()
+        outEvent.danceList = listOf()
+        outEvent.code = 200
+        verify(eventBus).post(outEvent)
+    }
+
+    @Test
+    fun getDances_FormDatabase_HappyPath() {
+        //Arrange
+        val mockedDataBase = mock(DataBase::class.java)
+        val mockedDanceNetwork = mock(DanceNetwork::class.java)
+        val eventBus = spy(EventBus.getDefault())
+        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+
+        val dance = Dance(0,"Dance", null, null)
+        val list = listOf<Dance>(dance)
+
+        `when`(mockedDanceNetwork.getDances()).thenReturn(listOf())
+        `when`(mockedDataBase.getAllDance()).thenReturn(list)
+
+        //Act
+        interactor.getDanceList()
+
+        //Assert
+        verify(mockedDataBase).getAllDance()
+        verify(mockedDanceNetwork).getDances()
+
+        val outEvent = GetDancesEvent()
+        outEvent.danceList = list
+        outEvent.code = 200
+        verify(eventBus).post(outEvent)
+    }
+
+    @Test
+    fun getDances_FormApi_HappyPathAndSaveToDatabase() {
+        //Arrange
+        val mockedDataBase = mock(DataBase::class.java)
+        val mockedDanceNetwork = mock(DanceNetwork::class.java)
+        val eventBus = spy(EventBus.getDefault())
+        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+
+        val dance = Dance(0,"Dance", null, null)
+        val list = listOf<Dance>(dance)
+
+        `when`(mockedDanceNetwork.getDances()).thenReturn(list)
+        `when`(mockedDataBase.getAllDance()).thenReturn(list)
+
+        //Act
+        interactor.getDanceList()
+
+        //Assert
+        verify(mockedDataBase).getAllDance()
+        verify(mockedDanceNetwork).getDances()
+        verify(mockedDataBase).save(dance)
+
+        val outEvent = GetDancesEvent()
+        outEvent.danceList = list
+        outEvent.code = 200
+        verify(eventBus).post(outEvent)
+    }
+
+    @Test
+    fun getDance_FromDataBase_HappyPath() {
+        //Arrange
+        val mockedDataBase = mock(DataBase::class.java)
+        val mockedDanceNetwork = mock(DanceNetwork::class.java)
+        val eventBus = spy(EventBus.getDefault())
+        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+
+        val dance = Dance(1,"name", null, null)
+        `when`(mockedDataBase.getDance(1)).thenReturn(dance)
+
+        //Act
+        interactor.getDance(1)
+
+        //Assert
+        verify(mockedDataBase).getDance(1)
+        verifyZeroInteractions(mockedDanceNetwork)
+
+        val outEvent = GetDanceEvent()
+        outEvent.dance = dance
+        outEvent.code = 200
+        verify(eventBus).post(outEvent)
+    }
+
+    @Test
+    fun getDance_FromNetwork_HappyPath() {
+        //Arrange
+        val mockedDataBase = mock(DataBase::class.java)
+        val mockedDanceNetwork = mock(DanceNetwork::class.java)
+        val eventBus = spy(EventBus.getDefault())
+        val interactor = DanceInteractor(mockedDanceNetwork, mockedDataBase, eventBus)
+
+        val dance = Dance(1,"name", null, null)
+        `when`(mockedDataBase.getDance(1)).thenReturn(null)
+        `when`(mockedDanceNetwork.getDance(1)).thenReturn(dance)
+
+        //Act
+        interactor.getDance(1)
+
+        //Assert
+        verify(mockedDataBase).getDance(1)
+        verify(mockedDanceNetwork).getDance(1)
+
+        val outEvent = GetDanceEvent()
+        outEvent.dance = dance
         outEvent.code = 200
         verify(eventBus).post(outEvent)
     }

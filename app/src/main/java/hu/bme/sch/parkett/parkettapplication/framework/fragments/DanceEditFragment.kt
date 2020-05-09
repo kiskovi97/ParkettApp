@@ -8,11 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import hu.bme.sch.parkett.parkettapplication.R
 import hu.bme.sch.parkett.parkettapplication.di.injector
 import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceEditScreen
 import hu.bme.sch.parkett.parkettapplication.model.Dance
+import hu.bme.sch.parkett.parkettapplication.model.DanceType
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceEditPresenter
 import kotlinx.android.synthetic.main.fragment_dance_edit.*
 import javax.inject.Inject
@@ -26,15 +29,21 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
 
     private val danceId by lazy { arguments!!.getInt(DanceEditFragment.DANCE_ID) }
 
+    lateinit var options: MutableList<DanceType>
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this);
+    }
+
+    override fun onStart() {
+        super.onStart()
         dancePresenter.attachScreen(this)
     }
 
-    override fun onDetach() {
+    override fun onStop() {
         dancePresenter.detachScreen()
-        super.onDetach()
+        super.onStop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,46 +58,71 @@ class DanceEditFragment : Fragment(), DanceEditScreen {
 
     override fun onResume() {
         super.onResume()
+        dancePresenter.refreshDanceTypeList()
         if (danceId >= 0) {
             dancePresenter.showDance(danceId)
         }
         saveButton.setOnClickListener {
             save()
         }
-        deleteButton.setOnClickListener {
-            delete()
-        }
     }
 
     override fun showDance(dance: Dance?) {
         if (dance != null) {
-            dance_edit_textView.text = "Edit: ${dance.id} ${dance.name}"
             editDanceName.setText(dance.name)
             editDanceContent.setText(dance.content)
-
-        } else {
-            dance_edit_textView.text = "Edit: No Dance found"
-        }
-        if (dance != null) {
             selectedDance = dance
+            val index = options.indexOf(selectedDance.dance_type)
+
+            if (index >= 0) {
+                spinnerDanceType.setSelection(index)
+            }
         }
     }
 
-    fun save() {
+    override fun setDanceTypeList(danceList: List<DanceType>) {
+        options = danceList.toMutableList()
+
+        spinnerDanceType.adapter = DanceTypeSpinnerAdapter(activity!!, R.layout.dance_type_spinner_item, options)
+
+        val index = options.indexOf(selectedDance.dance_type)
+
+        if (index >= 0) {
+            spinnerDanceType.setSelection(index)
+        }
+
+        spinnerDanceType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                selectedDance.dance_type = null
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position >= 0 && options.count() > position) {
+                    selectedDance.dance_type = options[position]
+                }
+            }
+        }
+    }
+
+    private fun save() {
         Log.d("Saving", selectedDance.toString())
 
         selectedDance.name = editDanceName.text.toString()
         selectedDance.content = editDanceContent.text.toString()
+
+        val selectedDanceType = spinnerDanceType.selectedItem as DanceType
+        selectedDance.dance_type = selectedDanceType
+
         dancePresenter.saveDance(selectedDance)
         activity?.finish()
     }
 
     fun delete() {
-        AlertDialog.Builder(context)
+        AlertDialog.Builder(context, R.style.AlertDialogTheme)
                 .setTitle("Deleting dance")
-                .setMessage("Are you sure you want to delete " + selectedDance.id  + ":" +selectedDance.name+ "dance")
+                .setMessage("Are you sure you want to delete dance with id: " + danceId)
                 .setPositiveButton("Yes") { _: DialogInterface, _: Int ->
-                    dancePresenter.deleteDance(selectedDance.id)
+                    dancePresenter.deleteDance(danceId)
                     activity?.finish()
                 }
                 .setNegativeButton("No", null)

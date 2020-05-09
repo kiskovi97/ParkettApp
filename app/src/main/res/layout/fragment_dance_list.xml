@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<GridLayout
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -8,10 +8,10 @@
     tools:context=".framework.fragments.DanceListFragment">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/danceListView"
-        android:padding="4dp"
+        android:padding="10dp"
         android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/dance_list_item"/>
 
-</LinearLayout >
+</GridLayout >

@@ -1,55 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".framework.fragments.DanceEditFragment"
+    android:background="#50000000"
+    android:layout_margin="10dp"
     android:orientation="vertical"
     >
 
-        <TextView
-            android:id="@+id/dance_edit_textView"
+        <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/name"
-            android:labelFor="@id/editDanceName"/>
-        <EditText
-            android:id="@+id/editDanceName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/name_of_dance"
-            android:importantForAutofill="no" />
+            android:layout_marginBottom="80dp"
+            >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/content"
-            android:labelFor="@id/editDanceContent"/>
-        <EditText
-            android:id="@+id/editDanceContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:importantForAutofill="no"
-            android:hint="@string/content2"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:labelFor="@id/editDanceName"
+                            android:text="@string/edit_name"
+                            android:layout_margin="10dp"
+                            />
+
+                        <EditText
+                            android:id="@+id/editDanceName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="@string/edit_name_hint"
+                            android:importantForAutofill="no"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/editColor" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:labelFor="@id/editDanceContent"
+                            android:text="@string/edit_dance_type"
+                            android:layout_margin="10dp" />
+
+                        <Spinner
+                            android:id="@+id/spinnerDanceType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/editColor"
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:labelFor="@id/editDanceContent"
+                            android:text="@string/edit_content"
+                            android:layout_margin="10dp" />
+
+                        <EditText
+                            android:id="@+id/editDanceContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/edit_content_hint"
+                            android:importantForAutofill="no"
+                            android:inputType="textMultiLine"
+                            android:textColor="@color/editColor" />
+                </LinearLayout>
+        </ScrollView>
+
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save" />
-
-        <Button
-            android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete" />
-</LinearLayout>
+            android:background="@color/colorOkButton"
+            android:text="@string/save_button"
+            android:layout_margin="10dp"
+            android:layout_alignParentBottom="true"/>
+</RelativeLayout>

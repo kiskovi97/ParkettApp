@@ -10,6 +10,7 @@ import hu.bme.sch.parkett.parkettapplication.network.DancesApi
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceEditPresenter
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceListPresenter
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceReadPresenter
+import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import javax.inject.Singleton
@@ -21,7 +22,7 @@ class ApplicationModule(
 
     @Provides
     @Singleton
-    fun provideDanceInteractor(danceNetwork: DanceNetwork, database: DataBase) = DanceInteractor(danceNetwork, database)
+    fun provideDanceInteractor(danceNetwork: DanceNetwork, database: DataBase) = DanceInteractor(danceNetwork, database, EventBus.getDefault())
 
     @Provides
     @Singleton

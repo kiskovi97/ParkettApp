@@ -1,21 +1,17 @@
 package hu.bme.sch.parkett.parkettapplication.interactor
 
 import android.util.Log
-import com.orm.SugarRecord
-import com.orm.SugarRecord.findById
 import hu.bme.sch.parkett.parkettapplication.database.DataBase
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceTypeListEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
 import hu.bme.sch.parkett.parkettapplication.model.Dance
-import hu.bme.sch.parkett.parkettapplication.model.DanceRecord
-import hu.bme.sch.parkett.parkettapplication.model.DanceTypeRecord
 import hu.bme.sch.parkett.parkettapplication.network.DanceNetwork
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 
-class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork, private var database: DataBase) {
+class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork, private var database: DataBase, private val eventBus: EventBus) {
 
     private var firstTime = true
 
@@ -23,12 +19,12 @@ class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork
         val event = GetDanceTypeListEvent()
         refreshDanceTypesFromAPI()
         try {
-            event.danceTypeList = database.listAllDanceType()
+            event.danceTypeList = database.getAllDanceType()
             event.code = 200
-            EventBus.getDefault().post(event)
+            eventBus.post(event)
         } catch (e: Exception) {
             event.throwable = e
-            EventBus.getDefault().post(event)
+            eventBus.post(event)
         }
     }
 
@@ -36,12 +32,12 @@ class DanceInteractor @Inject constructor(private var danceNetwork: DanceNetwork
         val event = GetDancesEvent()
         refreshDancesFromAPI()
         try {
-            event.danceList = database.listAllDance()
+            event.danceList = database.getAllDance()
             event.code = 200
-            EventBus.getDefault().post(event)
+            eventBus.post(event)
         } catch (e: Exception) {
             event.throwable = e
-            EventBus.getDefault().post(event)
+            eventBus.post(event)
         }
     }
 

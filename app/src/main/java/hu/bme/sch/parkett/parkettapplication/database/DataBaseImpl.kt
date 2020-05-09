@@ -25,12 +25,12 @@ class DataBaseImpl : DataBase {
         book.delete()
     }
 
-    override fun listAllDanceType(): List<DanceType> {
+    override fun getAllDanceType(): List<DanceType> {
         val list = SugarRecord.listAll(DanceTypeRecord::class.java)
         return list.map { value -> value.toDanceType()  }
     }
 
-    override fun listAllDance(): List<Dance> {
+    override fun getAllDance(): List<Dance> {
         val list = SugarRecord.listAll(DanceRecord::class.java)
         return list.map { value -> value.toDance()  }
     }

@@ -11,9 +11,9 @@ interface DataBase {
 
     fun delete(id: Int)
 
-    fun listAllDanceType() : List<DanceType>
+    fun getAllDanceType() : List<DanceType>
 
-    fun listAllDance() : List<Dance>
+    fun getAllDance() : List<Dance>
 
     fun getDance(id: Int) : Dance?
 }

@@ -9,35 +9,35 @@ class DanceNetworkImpl @Inject constructor(private var dancesApi: DancesApi): Da
         val queryCall = dancesApi.getDances()
         val response = queryCall.execute()
         if (response.code() != 200) {
-            throw Exception("Result code is not 200")
+            throw NetworkException("Result code is not 200")
         }
         if (response.body() != null) {
             return response.body()!!
         }
-        throw Exception("Body is empty")
+        throw NetworkException("Body is empty")
     }
 
     override fun getDance(danceId: Int): Dance {
         val queryCall = dancesApi.getDance(danceId)
         val response = queryCall.execute()
         if (response.code() != 200) {
-            throw Exception("Result code is not 200")
+            throw NetworkException("Result code is not 200")
         }
         if (response.body() != null) {
             return response.body()!!
         }
-        throw Exception("Body is empty")
+        throw NetworkException("Body is empty")
     }
 
     override fun getDanceTypes(): List<DanceType> {
         val queryCall = dancesApi.getDanceTypes()
         val response = queryCall.execute()
         if (response.code() != 200) {
-            throw Exception("Result code is not 200")
+            throw NetworkException("Result code is not 200")
         }
         if (response.body() != null) {
             return response.body()!!
         }
-        throw Exception("Body is empty")
+        throw NetworkException("Body is empty")
     }
 }

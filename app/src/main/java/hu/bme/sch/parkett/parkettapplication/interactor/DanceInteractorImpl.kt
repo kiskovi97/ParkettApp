@@ -7,6 +7,7 @@ import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceTypeListE
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import hu.bme.sch.parkett.parkettapplication.network.DanceNetwork
+import hu.bme.sch.parkett.parkettapplication.network.NetworkException
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
@@ -15,14 +16,14 @@ class DanceInteractorImpl @Inject constructor(private var danceNetwork: DanceNet
 
     private var firstTime = true
 
-    override fun getDanceTypeList(){
+    override fun getDanceTypeList() {
         val event = GetDanceTypeListEvent()
-        refreshDanceTypesFromAPI()
         try {
+            refreshDanceTypesFromAPI()
             event.danceTypeList = database.getAllDanceType()
             event.code = 200
             eventBus.post(event)
-        } catch (e: Exception) {
+        } catch (e: NetworkException) {
             event.throwable = e
             eventBus.post(event)
         }
@@ -30,12 +31,12 @@ class DanceInteractorImpl @Inject constructor(private var danceNetwork: DanceNet
 
     override fun getDanceList(){
         val event = GetDancesEvent()
-        refreshDancesFromAPI()
         try {
+            refreshDancesFromAPI()
             event.danceList = database.getAllDance()
             event.code = 200
             eventBus.post(event)
-        } catch (e: Exception) {
+        } catch (e: NetworkException) {
             event.throwable = e
             eventBus.post(event)
         }
@@ -53,36 +54,29 @@ class DanceInteractorImpl @Inject constructor(private var danceNetwork: DanceNet
     private fun refreshDanceTypesFromAPI() {
         if (!firstTime) return
         firstTime = false
-        try {
-            val danceTypes = danceNetwork.getDanceTypes()
-            for (danceType in danceTypes) {
-                database.save(danceType)
-            }
-        } catch (e: Exception) {
-            Log.w("API Error",e)
+        val danceTypes = danceNetwork.getDanceTypes()
+        for (danceType in danceTypes) {
+            database.save(danceType)
         }
     }
 
     override fun getDance(id: Int) {
         val event = GetDanceEvent()
-        var dance = database.getDance(id)
-        if (dance == null) {
-            val danceFromApi = getDanceFromAPI(id)
-            database.save(danceFromApi)
-            dance = danceFromApi
+        try{
+            var dance = database.getDance(id)
+            if (dance == null) {
+                val danceFromApi = danceNetwork.getDance(id)
+                database.save(danceFromApi)
+                dance = danceFromApi
+            }
+            event.dance = dance
+            event.code = 200
+            eventBus.post(event)
+        } catch (e: NetworkException) {
+            event.throwable = e
+            eventBus.post(event)
         }
-        event.dance = dance
-        event.code = 200
-        eventBus.post(event)
-    }
 
-    private fun getDanceFromAPI(id: Int): Dance? {
-        try {
-            return danceNetwork.getDance(id)
-        } catch (e: Exception) {
-            e.fillInStackTrace()
-        }
-        return null
     }
 
     override fun addDance(dance: Dance) {

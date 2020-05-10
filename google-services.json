@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "303925766906",
+    "firebase_url": "https://kovcs-gerg.firebaseio.com",
+    "project_id": "kovcs-gerg",
+    "storage_bucket": "kovcs-gerg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303925766906:android:b37ebfb2fe8258e4f9f743",
+        "android_client_info": {
+          "package_name": "hu.bme.sch.parkett.parkettapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "303925766906-j849pnv34qp9sn66c7vp60npvullqhvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMXAErRTEW0Rm-crzr366_-HeAV6WEUaw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "303925766906-j849pnv34qp9sn66c7vp60npvullqhvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

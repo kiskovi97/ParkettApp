@@ -4,7 +4,6 @@ import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceEditScreen
 import hu.bme.sch.parkett.parkettapplication.interactor.DanceInteractor
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceEvent
 import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDanceTypeListEvent
-import hu.bme.sch.parkett.parkettapplication.interactor.events.GetDancesEvent
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -14,17 +13,18 @@ import javax.inject.Inject
 
 class DanceEditPresenter @Inject constructor(
         private val executor: Executor,
-        private val danceInteractor: DanceInteractor
+        private val danceInteractor: DanceInteractor,
+        private val eventBus: EventBus
 ) : Presenter<DanceEditScreen>() {
     override fun attachScreen(screen: DanceEditScreen) {
         super.attachScreen(screen)
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this)
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this)
         }
     }
 
     override fun detachScreen() {
-        EventBus.getDefault().unregister(this)
+        eventBus.unregister(this)
         super.detachScreen()
     }
 

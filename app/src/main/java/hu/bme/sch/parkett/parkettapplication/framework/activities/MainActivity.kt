@@ -24,16 +24,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_dance_list, DanceListFragment.newInstance()).commit()
 
         mFirebaseAnalytics?.logEvent("OnCreate", Bundle())
-
-        val crashButton = Button(this)
-        crashButton.text = "Crash!"
-        crashButton.setOnClickListener {
-            throw RuntimeException("Test Crash") // Force a crash
-        }
-
-        addContentView(crashButton, ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

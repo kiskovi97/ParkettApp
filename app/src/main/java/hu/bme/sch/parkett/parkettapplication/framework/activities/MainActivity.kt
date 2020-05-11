@@ -23,11 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_dance_list, DanceListFragment.newInstance()).commit()
 
-        val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "ItemID")
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "name")
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
-        mFirebaseAnalytics?.logEvent("HelpImStuck", bundle)
+        mFirebaseAnalytics?.logEvent("OnCreate", Bundle())
 
         val crashButton = Button(this)
         crashButton.text = "Crash!"
@@ -41,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        mFirebaseAnalytics?.logEvent("onOptionsItemSelected", Bundle())
         when (item.itemId) {
             R.id.addIcon -> {
                 val intent = Intent(this, DanceActivity::class.java).apply {
@@ -53,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        mFirebaseAnalytics?.logEvent("onCreateOptionsMenu", Bundle())
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }

@@ -1,7 +1,14 @@
 package hu.bme.sch.parkett.parkettapplication.framework.fragments
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
+import android.os.Build
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +19,7 @@ import hu.bme.sch.parkett.parkettapplication.framework.scenes.DanceReadScreen
 import hu.bme.sch.parkett.parkettapplication.model.Dance
 import hu.bme.sch.parkett.parkettapplication.presenter.DanceReadPresenter
 import kotlinx.android.synthetic.main.fragment_dance_read.*
+import java.nio.ByteBuffer
 import javax.inject.Inject
 
 
@@ -25,12 +33,16 @@ class DanceReadFragment : Fragment(), DanceReadScreen {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         injector.inject(this);
+    }
+
+    override fun onStart() {
+        super.onStart()
         dancePresenter.attachScreen(this)
     }
 
-    override fun onDetach() {
+    override fun onStop() {
         dancePresenter.detachScreen()
-        super.onDetach()
+        super.onStop()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +64,38 @@ class DanceReadFragment : Fragment(), DanceReadScreen {
         if (dance == null) {
             dance_textView.text = "DanceRead: No dance found"
         } else {
-            dance_textView.text = "DanceRead: " + dance.id + " " + dance.name
+            dance_textView.text = dance.name + ": " + dance.content
+
+            if (dance.dance_type?.image != null) {
+                val base64string = dance.dance_type?.image?.substring(22)
+
+                if (base64string != null) {
+                    val imageBytes = Base64.decode(base64string, Base64.DEFAULT)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        val imageByteBuffer = ByteBuffer.wrap(imageBytes)
+                        val source = ImageDecoder.createSource(imageByteBuffer)
+                        val bitmap = ImageDecoder.decodeDrawable(source)
+                        dance_image.setImageDrawable(bitmap)
+                    } else {
+                        val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                        dance_image.setImageBitmap(decodedImage)
+                    }
+                }
+            }
+
         }
+    }
+
+    fun delete() {
+        AlertDialog.Builder(context, R.style.AlertDialogTheme)
+                .setTitle("Deleting dance")
+                .setMessage("Are you sure you want to delete dance with id: " + danceId)
+                .setPositiveButton("Yes") { _: DialogInterface, _: Int ->
+                    dancePresenter.deleteDance(danceId)
+                    activity?.finish()
+                }
+                .setNegativeButton("No", null)
+                .show()
     }
 
     companion object {

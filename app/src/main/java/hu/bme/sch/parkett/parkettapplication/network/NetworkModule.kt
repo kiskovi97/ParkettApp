@@ -20,7 +20,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideArtistsApi(client: OkHttpClient): DancesApi {
+    fun provideDancesApi(client: OkHttpClient): DancesApi {
         val retrofit = Retrofit.Builder()
                 .client(client)
                 .baseUrl(NetworkConfig.API_ENDPOINT_ADDRESS)
@@ -28,4 +28,8 @@ class NetworkModule {
                 .build()
         return retrofit.create(DancesApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideNetwork(api: DancesApi) : DanceNetwork = DanceNetworkImpl(api)
 }

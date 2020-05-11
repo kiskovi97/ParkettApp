@@ -2,6 +2,7 @@ package hu.bme.sch.parkett.parkettapplication.di
 
 import dagger.Component
 import hu.bme.sch.parkett.parkettapplication.ParkettApplication
+import hu.bme.sch.parkett.parkettapplication.database.DataBaseModule
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceEditFragment
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceListFragment
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceReadFragment
@@ -11,7 +12,8 @@ import javax.inject.Singleton
 @Singleton
 @Component( modules = [
     ApplicationModule::class,
-    NetworkModule::class
+    NetworkModule::class,
+    DataBaseModule::class
 ])
 public interface AppComponent {
     fun inject(parkettApplication: ParkettApplication)

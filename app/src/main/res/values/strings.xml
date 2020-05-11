@@ -3,11 +3,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="name">name</string>
+    <string name="edit_name">name</string>
     <string name="name2">Name</string>
-    <string name="content">content</string>
-    <string name="save">Save</string>
+    <string name="edit_content">content</string>
+    <string name="save_button">Save</string>
     <string name="delete">Delete</string>
-    <string name="name_of_dance">Name of Dance</string>
-    <string name="content2">Content</string>
+    <string name="edit_name_hint">Name of Dance</string>
+    <string name="edit_content_hint">Content</string>
+    <string name="lotOfSpace">x\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\nh\n</string>
+    <string name="edit_dance_type">dance type</string>
+    <string name="image_content_description">Image Of Dance</string>
 </resources>

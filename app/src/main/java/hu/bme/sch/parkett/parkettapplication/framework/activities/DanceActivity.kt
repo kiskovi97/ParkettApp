@@ -8,17 +8,22 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import com.google.firebase.analytics.FirebaseAnalytics
 import hu.bme.sch.parkett.parkettapplication.R
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceEditFragment
 import hu.bme.sch.parkett.parkettapplication.framework.fragments.DanceReadFragment
 
 class DanceActivity : AppCompatActivity() {
 
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
+
     private var selectedId: Int? = null
     private var edit: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
         setContentView(R.layout.activity_dance)
         val id = intent.getIntExtra(DANCE_ID, -1)
         if (id != -1) {
@@ -42,10 +47,18 @@ class DanceActivity : AppCompatActivity() {
             edit = false
             supportFragmentManager.beginTransaction().replace(R.id.fragment_dance_read, DanceReadFragment.newInstance(id)).commit()
         }
+
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CREATIVE_NAME, "OnCreate")
+        mFirebaseAnalytics?.logEvent("DanceActivity", bundle)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.readview_menu, menu)
+
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CREATIVE_NAME, "onCreateOptionsMenu")
+        mFirebaseAnalytics?.logEvent("DanceActivity", bundle)
 
         if (selectedId == -1) {
             val item0 = menu?.getItem(0)
@@ -60,6 +73,11 @@ class DanceActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CREATIVE_NAME, "onOptionsItemSelected")
+        mFirebaseAnalytics?.logEvent("DanceActivity", bundle)
+
         when (item.itemId) {
             R.id.deleteIcon -> {
                 delete()
@@ -83,6 +101,11 @@ class DanceActivity : AppCompatActivity() {
     }
 
     private fun delete() {
+
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CREATIVE_NAME, "delete")
+        mFirebaseAnalytics?.logEvent("DanceActivity", bundle)
+
         if (edit) {
             val fragment = supportFragmentManager.findFragmentById(R.id.fragment_dance_read) as DanceEditFragment
             fragment.delete()
